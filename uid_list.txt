@@ -1,0 +1,5 @@
+internal const string printer_guid = "28D78FAD-5A12-11D1-AE5B-0000F803A8C2";
+internal const string hid_guid = "4D1E55B2-F16F-11CF-88CB-001111000030";
+internal const string kube_scanner_guid = "677B61C8-F87F-4D0D-AEC3-9C94A674FEFD";
+internal const string scanner_guid = "5B51A523-CEAD-4468-99DD-BF85B80E0A64";
+internal const string bt_spp_guid = "00001101-0000-1000-8000-00805F9B34FB";

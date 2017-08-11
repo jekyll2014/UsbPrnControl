@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="UsbPrnControl.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CodePage" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">866</Value>
+    </Setting>
+    <Setting Name="CPDescString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Codepages list: https://msdn.microsoft.com/en-us/library/system.text.encoding(v=vs.110).aspx</Value>
+    </Setting>
+    <Setting Name="GUID_PRINT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">28D78FAD-5A12-11D1-AE5B-0000F803A8C2</Value>
+    </Setting>
+    <Setting Name="checkBox_hexCommand" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="textBox_command" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="checkBox_hexParam" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="textBox_param" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GUID_SCAN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5B51A523-CEAD-4468-99DD-BF85B80E0A64</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

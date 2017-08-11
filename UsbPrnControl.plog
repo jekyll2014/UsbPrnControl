@@ -1,0 +1,117 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Solution_Path">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="SolutionPath" type="xs:string" minOccurs="0" />
+                <xs:element name="SolutionVersion" type="xs:string" minOccurs="0" />
+                <xs:element name="PlogVersion" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="ModificationDate" msdata:DateTimeMode="Utc" type="xs:dateTime" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PVS-Studio_Analysis_Log">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="FavIcon" type="xs:boolean" minOccurs="0" />
+                <xs:element name="Level" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="DefaultOrder" type="xs:int" minOccurs="0" />
+                <xs:element name="ErrorCode" type="xs:string" minOccurs="0" />
+                <xs:element name="Message" type="xs:string" />
+                <xs:element name="Project" type="xs:string" minOccurs="0" />
+                <xs:element name="ShortFile" type="xs:string" minOccurs="0" />
+                <xs:element name="Line" type="xs:int" />
+                <xs:element name="FalseAlarm" type="xs:boolean" minOccurs="0" />
+                <xs:element name="File" type="xs:string" />
+                <xs:element name="CodePrev" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="CodeCurrent" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="CodeNext" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="TrialMessage" type="xs:boolean" minOccurs="0" />
+                <xs:element name="Analyzer" type="xs:int" minOccurs="0" />
+                <xs:element name="LineExtension" type="xs:string" minOccurs="0" />
+                <xs:element name="Retired" type="xs:boolean" default="false" minOccurs="0" />
+                <xs:element name="AnalyzedSourceFiles" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//PVS-Studio_Analysis_Log" />
+        <xs:field xpath="Line" />
+        <xs:field xpath="Message" />
+        <xs:field xpath="File" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <Solution_Path>
+    <SolutionPath>C:\jekyll\_programming\projects\c_sharp\UsbPrnControl\UsbPrnControl.sln</SolutionPath>
+    <SolutionVersion>14.0</SolutionVersion>
+    <PlogVersion>4</PlogVersion>
+    <ModificationDate>2017-02-21T08:42:41.7323885Z</ModificationDate>
+  </Solution_Path>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>3</Level>
+    <DefaultOrder>1</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'Symb_Link' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 243, 242.</Message>
+    <Project>UsbPrnControl</Project>
+    <ShortFile>Form1.cs</ShortFile>
+    <Line>243</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>C:\jekyll\_programming\projects\c_sharp\UsbPrnControl\CS_USB_Example\Form1.cs</File>
+    <CodePrev>4034137788</CodePrev>
+    <CodeCurrent>35744558</CodeCurrent>
+    <CodeNext>0</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>243,242</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>2</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'confRet' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 268, 264.</Message>
+    <Project>UsbPrnControl</Project>
+    <ShortFile>Form1.cs</ShortFile>
+    <Line>268</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>C:\jekyll\_programming\projects\c_sharp\UsbPrnControl\CS_USB_Example\Form1.cs</File>
+    <CodePrev>706790628</CodePrev>
+    <CodeCurrent>5393332</CodeCurrent>
+    <CodeNext>371407995</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>268,264</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+  <PVS-Studio_Analysis_Log>
+    <FavIcon>false</FavIcon>
+    <Level>2</Level>
+    <DefaultOrder>3</DefaultOrder>
+    <ErrorCode>V3008</ErrorCode>
+    <Message>The 'Selected_Printer' variable is assigned values twice successively. Perhaps this is a mistake. Check lines: 360, 359.</Message>
+    <Project>UsbPrnControl</Project>
+    <ShortFile>Form1.cs</ShortFile>
+    <Line>360</Line>
+    <FalseAlarm>false</FalseAlarm>
+    <File>C:\jekyll\_programming\projects\c_sharp\UsbPrnControl\CS_USB_Example\Form1.cs</File>
+    <CodePrev>1195748016</CodePrev>
+    <CodeCurrent>1178664359</CodeCurrent>
+    <CodeNext>487772534</CodeNext>
+    <TrialMessage>false</TrialMessage>
+    <Analyzer>4</Analyzer>
+    <LineExtension>360,359</LineExtension>
+    <Retired>false</Retired>
+    <AnalyzedSourceFiles />
+  </PVS-Studio_Analysis_Log>
+</NewDataSet>
