@@ -7,9 +7,6 @@
 //All programs contained herein are provided to you "as is" without any warranties of any kind. 
 //The implied warranties of non-infringement, merchantability and fitness for a particular purpose are expressly disclaimed.
 
-using System;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace UsbPrnControl
@@ -584,160 +581,13 @@ namespace UsbPrnControl
         private ProgressBar progressBar1;
         private TextBox textBox_strDelay;
         private Label label1;
-        ToolTip ToolTipTerminal = new ToolTip();
-
-        int SendComing = 0;
-        int txtOutState = 0;
-        long oldTicks = DateTime.Now.Ticks, limitTick = 0;
-
-
-        byte[] ConvertHexToByte(string hexString)
-        {
-            hexString = hexString.Replace(" ", "");
-            if (hexString.Length % 2 == 1) hexString = hexString + "0";
-            byte[] byteValue = new byte[hexString.Length / 2];
-            int i = 0;
-            while (hexString.Length > 1)
-            {
-                byteValue[i] = System.Convert.ToByte(System.Convert.ToUInt32(hexString.Substring(0, 2), 16));
-                hexString = hexString.Substring(2, hexString.Length - 2);
-                i++;
-            }
-            return byteValue;
-        }
-
-        string ConvertStringToHex(string utfString)
-        {
-            byte[] encodedBytes = System.Text.Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage).GetBytes(utfString);
-            string hexStr = "";
-            foreach (System.Char c in encodedBytes)
-            {
-                hexStr += ((int)c).ToString("X2") + " ";
-            }
-            return hexStr;
-        }
-
-        string ConvertByteArrToHex(byte[] byteArr, int arrLength)
-        {
-            string hexStr = "";
-            int i = 0;
-            for (i = 0; i < arrLength; i++)
-            {
-                hexStr += byteArr[i].ToString("X2") + " ";
-            }
-            return hexStr;
-        }
-
-        string ConvertHexToString(string hexString)
-        {
-            hexString = hexString.Replace(" ", "");
-            if (hexString.Length % 2 == 1) hexString = hexString + "0";
-            byte[] StrValue = new byte[hexString.Length / 2];
-            int i = 0;
-            while (hexString.Length > 1)
-            {
-                StrValue[i] = System.Convert.ToByte(System.Convert.ToUInt32(hexString.Substring(0, 2), 16));
-                hexString = hexString.Substring(2, hexString.Length - 2);
-                i++;
-            }
-            return System.Text.Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage).GetString(StrValue, 0, i);
-        }
-
-        string checkHexString(string inStr)
-        {
-            string outStr = "";
-            if (inStr != "")
-            {
-                char[] str = inStr.ToCharArray(0, inStr.Length);
-                string tmpStr = "";
-                for (int i = 0; i < inStr.Length; i++)
-                {
-                    if ((str[i] >= 'A' && str[i] <= 'F') || (str[i] >= 'a' && str[i] <= 'f') || (str[i] >= '0' && str[i] <= '9'))
-                    {
-                        tmpStr += str[i].ToString();
-                    }
-                    else if (str[i] == ' ' && tmpStr.Length > 0)
-                    {
-                        for (int i1 = 0; i1 < 2 - tmpStr.Length; i1++) outStr += "0";
-                        outStr += tmpStr + " ";
-                        tmpStr = "";
-                    }
-                    if (tmpStr.Length == 2)
-                    {
-                        outStr += tmpStr + " ";
-                        tmpStr = "";
-                    }
-                }
-                if (tmpStr != "")
-                {
-                    for (int i = 0; i < 2 - tmpStr.Length; i++) outStr += "0";
-                    outStr += tmpStr + " ";
-                }
-                return outStr;
-            }
-            else return ("");
-        }
-
-        public const byte Port1DataIn = 11;
-        public const byte Port1DataOut = 12;
-        public const byte Port1Error = 15;
-
-        /*private void SetText(string text)
-        {
-                this.textBox_terminal.SelectionStart = this.textBox_terminal.TextLength;
-                this.textBox_terminal.SelectedText = text;
-        }*/
-
-        private object threadLock = new object();
-        public void collectBuffer(string tmpBuffer, int state, string time)
-        {
-            if (tmpBuffer != "")
-            {
-                lock (threadLock)
-                {
-                    if (txtOutState == state && (DateTime.Now.Ticks - oldTicks) < limitTick && state != Port1DataOut) ;
-                    else
-                    {
-                        if (state == Port1DataIn)
-                        {
-                            tmpBuffer = "<< " + tmpBuffer;
-                        }
-                        else if (state == Port1DataOut)
-                        {
-                            tmpBuffer = ">> " + tmpBuffer;
-                        }
-                        else if (state == Port1Error)
-                        {
-                            tmpBuffer = "!! " + tmpBuffer;
-                        }
-
-                        if (checkBox_saveTime.Checked == true) tmpBuffer = time + " " + tmpBuffer;
-                        tmpBuffer = "\r\n" + tmpBuffer;
-                        txtOutState = state;
-                    }
-                    if ((checkBox_saveInput.Checked == true && state == Port1DataIn) || (checkBox_saveOutput.Checked == true && state == Port1DataOut))
-                    {
-                        try
-                        {
-                            File.AppendAllText(textBox_saveTo.Text, tmpBuffer, Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage));
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("\r\nError opening file " + textBox_saveTo.Text + ": " + ex.Message);
-                        }
-                    }
-                    textBox_terminal.SelectionStart = textBox_terminal.TextLength;
-                    textBox_terminal.SelectedText = tmpBuffer;
-                    oldTicks = DateTime.Now.Ticks;
-                }
-            }
-        }
-
         private CheckBox checkBox_printer;
         private CheckBox checkBox_scanner;
         private CheckBox checkBox_saveTime;
         private CheckBox checkBox_saveOutput;
         private Label label2;
+        ToolTip ToolTipTerminal = new ToolTip();
+
     }
 }
 

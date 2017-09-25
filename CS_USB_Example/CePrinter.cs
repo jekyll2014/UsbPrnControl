@@ -11,89 +11,89 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace UsbPrnControl
+namespace CeUSBPrinter
 {
     public class CePrinter
     {
         #region STRUCT-ENUM-VARIABLE
-            public String USB_ADDRESS_NUMBER;
-            public String USB_SYMBOLIC_NAME;
-            public String PRINTER_PID;
-            public int READ_TIMEOUT = 200;
-            public int WRITE_TIMEOUT = 1000;
+        public String USB_ADDRESS_NUMBER;
+        public String USB_SYMBOLIC_NAME;
+        public String PRINTER_PID;
+        public int READ_TIMEOUT = 200;
+        public int WRITE_TIMEOUT = 1000;
 
-            private const int bytesperlong = 4;
-            private const int bitsperbyte = 8;
-            private const uint GENERIC_READ = 0x80000000;
-            private const int FILE_SHARE_READ = 1;
-            private const int OPEN_EXISTING = 3;
-            private const int FILE_FLAG_OVERLAPPED = 1073741824;
-            private const int GENERIC_WRITE = 0x40000000;
-            private const int FILE_FLAG_NO_BUFFERING = 0x20000000;
-            private const uint FILE_FLAG_WRITE_THROUGH = 0x80000000;
-            private const int FILE_SHARE_WRITE = 2;
-            private const int WAIT_OBJECT_0 = 0x00000000;
-            private const int WAIT_TIMEOUT = 0x00000102;
+        private const int bytesperlong = 4;
+        private const int bitsperbyte = 8;
+        private const uint GENERIC_READ = 0x80000000;
+        private const int FILE_SHARE_READ = 1;
+        private const int OPEN_EXISTING = 3;
+        private const int FILE_FLAG_OVERLAPPED = 1073741824;
+        private const int GENERIC_WRITE = 0x40000000;
+        private const int FILE_FLAG_NO_BUFFERING = 0x20000000;
+        private const uint FILE_FLAG_WRITE_THROUGH = 0x80000000;
+        private const int FILE_SHARE_WRITE = 2;
+        private const int WAIT_OBJECT_0 = 0x00000000;
+        private const int WAIT_TIMEOUT = 0x00000102;
 
-            private IntPtr hUsbDev_read;
-            private IntPtr hUsbDev_write;
-            private IntPtr hEvent_write;
-            private IntPtr hEvent_read;
+        private IntPtr hUsbDev_read;
+        private IntPtr hUsbDev_write;
+        private IntPtr hEvent_write;
+        private IntPtr hEvent_read;
 
-            //private byte[] temporary_buffer_1 = new byte[2048];
-            private const int USB_PACK = 2048;
+        //private byte[] temporary_buffer_1 = new byte[2048];
+        private const int USB_PACK = 2048;
 
-            #region DLL_IMPORTED_FUNCTIONS
-                /***** CREATE FILE *****/
-                [DllImport("kernel32.dll", SetLastError = true)]
-                private static extern IntPtr CreateFile(string lpFileName,
-                                                        uint dwDesiredAccess,
-                                                        uint dwShareMode,
-                                                        IntPtr lpSecurityAttributes,
-                                                        uint dwCreationDisposition,
-                                                        uint dwFlagsAndAttributes,
-                                                        IntPtr hTemplateFile);
-                /***** CREATE EVENT *****/
-                [DllImport("kernel32.dll")]
-                private static extern IntPtr CreateEvent(IntPtr lpEventAttributes,
-                                                         bool bManualReset,
-                                                         bool bInitialState,
-                                                         string lpName);
-                /***** CLOSE HANDLE *****/
-                [DllImport("kernel32.dll", SetLastError = true)]
-                [return: MarshalAs(UnmanagedType.Bool)]
-                private static extern bool CloseHandle(IntPtr hObject);
-                /***** WRITE FILE *****/
-                [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
-                private static extern bool WriteFile(
-                    IntPtr hFile,
-                    [In] byte[] lpBuffer,
-                    int nNumberOfBytesToWrite,
-                    out uint lpNumberOfBytesWritten,
-                    ref System.Threading.NativeOverlapped lpOverlapped);
-                /***** WAIT FOR SINGLE OBJECT *****/
-                [DllImport("kernel32.dll", SetLastError = true)]
-                private static extern int WaitForSingleObject(IntPtr hHandle, int dwMilliseconds);
-                /***** CANCEL IO *****/
-                [DllImport("kernel32.dll")]
-                [return: MarshalAs(UnmanagedType.Bool)]
-                private static extern bool CancelIo(IntPtr hFile);
-                /***** READ FILE *****/
-                [DllImport("kernel32.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-                private static extern bool ReadFile(
-                    IntPtr hFile,
-                    [Out] IntPtr lpBuffer,//[Out] byte[] lpBuffer,
-                    int nNumberOfBytesToRead,
-                    out uint lpNumberOfBytesRead,
-                    ref System.Threading.NativeOverlapped lpOverlapped);
-                /***** GET OVERLAPPED RESULT *****/
-                [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
-                private static extern int GetOverlappedResult(
-                    IntPtr hFile,
-                    ref System.Threading.NativeOverlapped lpOverlapped,
-                    ref uint lpNumberOfBytesTransferred,
-                    bool bWait);
-            #endregion
+        #region DLL_IMPORTED_FUNCTIONS
+        /***** CREATE FILE *****/
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr CreateFile(string lpFileName,
+                                                uint dwDesiredAccess,
+                                                uint dwShareMode,
+                                                IntPtr lpSecurityAttributes,
+                                                uint dwCreationDisposition,
+                                                uint dwFlagsAndAttributes,
+                                                IntPtr hTemplateFile);
+        /***** CREATE EVENT *****/
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr CreateEvent(IntPtr lpEventAttributes,
+                                                 bool bManualReset,
+                                                 bool bInitialState,
+                                                 string lpName);
+        /***** CLOSE HANDLE *****/
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool CloseHandle(IntPtr hObject);
+        /***** WRITE FILE *****/
+        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, SetLastError = true)]
+        private static extern bool WriteFile(
+            IntPtr hFile,
+            [In] byte[] lpBuffer,
+            int nNumberOfBytesToWrite,
+            out uint lpNumberOfBytesWritten,
+            ref System.Threading.NativeOverlapped lpOverlapped);
+        /***** WAIT FOR SINGLE OBJECT *****/
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern int WaitForSingleObject(IntPtr hHandle, int dwMilliseconds);
+        /***** CANCEL IO *****/
+        [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool CancelIo(IntPtr hFile);
+        /***** READ FILE *****/
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        private static extern bool ReadFile(
+            IntPtr hFile,
+            [Out] IntPtr lpBuffer,//[Out] byte[] lpBuffer,
+            int nNumberOfBytesToRead,
+            out uint lpNumberOfBytesRead,
+            ref System.Threading.NativeOverlapped lpOverlapped);
+        /***** GET OVERLAPPED RESULT *****/
+        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern int GetOverlappedResult(
+            IntPtr hFile,
+            ref System.Threading.NativeOverlapped lpOverlapped,
+            ref uint lpNumberOfBytesTransferred,
+            bool bWait);
+        #endregion
         #endregion
 
         /***********************************************************************
@@ -165,7 +165,7 @@ namespace UsbPrnControl
                         pack[y] = BufferWrite[q * USB_PACK + y];
                     //send pack
                     last_error = GenericWrite_singlePack_USB(pack);
-                    if (!last_error )
+                    if (!last_error)
                         return last_error;
                 }
                 if (remind > 0)
@@ -176,7 +176,7 @@ namespace UsbPrnControl
                         pack[y] = BufferWrite[BufferWrite.Length - remind + y];
                     //send minipack
                     last_error = GenericWrite_singlePack_USB(pack);
-                    if (!last_error )
+                    if (!last_error)
                         return last_error;
                 }
                 return true;
@@ -273,7 +273,7 @@ namespace UsbPrnControl
                 BufferRead[i] = fifoBuffer[i];
             fifoBuffer.Clear();
             Marshal.FreeHGlobal(tmp_buffer);
-            if (!timeout_tick )
+            if (!timeout_tick)
                 return true;
             else
                 return false;
