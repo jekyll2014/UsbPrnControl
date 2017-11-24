@@ -675,11 +675,11 @@ namespace UsbPrnControl
                                 tmpBuffer = Accessory.checkHexString(tmpBuffer);
                                 for (int m = 0; m < tmpBuffer.Length; m += 3)
                                 {
+                                        if (checkBox_hexTerminal.Checked) outStr = tmpBuffer.Substring(m, 3);
+                                        else outStr = Accessory.ConvertHexToString(tmpBuffer.Substring(m, 3));
                                     collectBuffer(outStr, Port1DataOut, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
                                     if (Selected_Printer.GenericWrite(Accessory.ConvertHexToByteArray(tmpBuffer.Substring(m, 3))))
                                     {
-                                        if (checkBox_hexTerminal.Checked) outStr = tmpBuffer.Substring(m, 3);
-                                        else outStr = Accessory.ConvertHexToString(tmpBuffer.Substring(m, 3));
                                         await TaskEx.Delay(strDelay);
                                         ReadUSB();
                                     }
