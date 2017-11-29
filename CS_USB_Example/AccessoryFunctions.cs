@@ -15,7 +15,7 @@ public partial class Accessory
         int i = 0;
         while (hexString.Length > 1)
         {
-            StrValue[i] = System.Convert.ToByte(System.Convert.ToUInt32(hexString.Substring(0, 2), 16));
+            StrValue[i] = Convert.ToByte(Convert.ToUInt32(hexString.Substring(0, 2), 16));
             hexString = hexString.Substring(2, hexString.Length - 2);
             i++;
         }
@@ -30,7 +30,7 @@ public partial class Accessory
         int i = 0;
         while (hexString.Length > 1)
         {
-            byteValue[i] = System.Convert.ToByte(System.Convert.ToUInt32(hexString.Substring(0, 2), 16));
+            byteValue[i] = Convert.ToByte(Convert.ToUInt32(hexString.Substring(0, 2), 16));
             hexString = hexString.Substring(2, hexString.Length - 2);
             i++;
         }
@@ -43,7 +43,7 @@ public partial class Accessory
         byte byteValue = 0;
         if (hexString.Length > 0 && hexString.Length < 3)
         {
-            byteValue = System.Convert.ToByte(System.Convert.ToUInt32(hexString, 16));
+            byteValue = Convert.ToByte(Convert.ToUInt32(hexString, 16));
         }
         return byteValue;
     }
@@ -51,7 +51,7 @@ public partial class Accessory
     public static string ConvertHexToDec(string HexString)
     {
         string DecString;
-        DecString = System.Convert.ToInt32(HexString, 16).ToString();
+        DecString = Convert.ToInt32(HexString, 16).ToString();
         return DecString;
     }
 
@@ -62,7 +62,7 @@ public partial class Accessory
         hexString = hexString.Replace("h", "");
         hexString = hexString.Replace("X", "");
         hexString = hexString.Replace("H", "");
-        return int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
+        return int.Parse(hexString, NumberStyles.HexNumber);
     }
 
     public static string ConvertStringToHex(string utfString)
@@ -76,7 +76,7 @@ public partial class Accessory
         return hexStr;
     }
 
-    public static string ConvertDecToString(string decString)
+    public static string ConvertDecToString(string decString)  //???? check negative values
     {
         decString = decString.Replace(" ", "");
         if (decString.Length % 3 == 1) return "";
@@ -84,7 +84,7 @@ public partial class Accessory
         int i = 0;
         while (decString.Length > 1)
         {
-            if (System.Convert.ToUInt32(decString.Substring(0, 3), 10) < 256) StrValue[i] = System.Convert.ToByte(System.Convert.ToUInt32(decString.Substring(0, 3), 10));
+            if (Convert.ToUInt32(decString.Substring(0, 3), 10) < 256) StrValue[i] = Convert.ToByte(Convert.ToUInt32(decString.Substring(0, 3), 10));
             else StrValue[i] = 0xff;
             decString = decString.Substring(3, decString.Length - 3);
             i++;
@@ -110,7 +110,7 @@ public partial class Accessory
         return hexStr;
     }
 
-    public static string ConvertBinToString(string binString)
+    public static string ConvertBinToString(string binString)  //???? check negative values
     {
         binString = binString.Replace(" ", "");
         if (binString.Length % 8 == 1) return "";
@@ -118,7 +118,7 @@ public partial class Accessory
         int i = 0;
         while (binString.Length > 0)
         {
-            StrValue[i] = System.Convert.ToByte(System.Convert.ToUInt32(binString.Substring(0, 8), 2));
+            StrValue[i] = Convert.ToByte(Convert.ToUInt32(binString.Substring(0, 8), 2));
             binString = binString.Substring(8, binString.Length - 8);
             i++;
         }
@@ -138,7 +138,7 @@ public partial class Accessory
         return hexStr + " ";
     }
 
-    public static string checkHexString(string inStr)
+    public static string CheckHexString(string inStr)
     {
         string outStr = "";
         if (inStr != "")
@@ -173,7 +173,7 @@ public partial class Accessory
         else return ("");
     }
 
-    public static string checkDecString(string inStr)  //добавить фильтрацию значений >255
+    public static string CheckDecString(string inStr)  //добавить фильтрацию значений >255
     {
         string outStr = "";
         if (inStr != "")
@@ -208,7 +208,7 @@ public partial class Accessory
         else return ("");
     }
 
-    public static string checkBinString(string inStr)  // проверить
+    public static string CheckBinString(string inStr)  // проверить
     {
         string outStr = "";
         if (inStr != "")
@@ -304,33 +304,32 @@ public partial class Accessory
         return byteVal.ToString("X2") + " ";
     }
 
-    public static bool printableByteArray(byte[] str)
+    public static bool PrintableByteArray(byte[] str)
     {
-        for (Int32 i = 0; i < str.Length; i++)
+        for (int i = 0; i < str.Length; i++)
         {
             if (str[i] < 32) return false;
         }
         return true;
     }
 
-    public static bool printableByte(byte b)
+    public static bool PrintableByte(byte b)
     {
         if (b < 32) return false;
         return true;
     }
 
-    public static bool printableHex(string str)
+    public static bool PrintableHex(string str)
     {
-        byte n;
-        for (Int32 i = 0; i < str.Length; i += 3)
+        for (int i = 0; i < str.Length; i += 3)
         {
-            if (!byte.TryParse(str.Substring(i, 3), NumberStyles.HexNumber, null, out n)) return false;
+            if (!byte.TryParse(str.Substring(i, 3), NumberStyles.HexNumber, null, out byte n)) return false;
             else if (n < 32) return false;
         }
         return true;
     }
 
-    public static int countSubString(string str, string subStr)
+    public static int CountSubString(string str, string subStr)
     {
         int count = 0;
         int n = 0;
@@ -356,7 +355,7 @@ public partial class Accessory
         return (long)(loDataTable.Rows[0]["Eval"]);
     }
 
-    public static void delay_ms(long milisec)
+    public static void Delay_ms(long milisec)
     {
         DateTime start = DateTime.Now;
 
@@ -409,10 +408,10 @@ public partial class Accessory
         PIC_BUFFER[7] = yH;
 
         byte tmp_byte;
-        Int32 index = 8;
-        for (Int32 row = 0; row < PIC_HEIGHT; row++)
+        int index = 8;
+        for (int row = 0; row < PIC_HEIGHT; row++)
         {
-            for (Int32 column = 0; column < PIC_WIDTH; column += 8) //'every 8 pixel is one byte
+            for (int column = 0; column < PIC_WIDTH; column += 8) //'every 8 pixel is one byte
             {
                 tmp_byte = 0;
                 //' NOTE: if any of RGB value is 0, then the color must be black, otherwhise if FF it means white
@@ -453,12 +452,12 @@ public partial class Accessory
         PICTURE_BMP = new Bitmap(PIC_WIDTH, PIC_HEIGHT);
 
         byte tmp_byte = 0;
-        Int32 index = 8;
+        int index = 8;
         //'create the buffer
 
-        for (Int32 row = 0; row < PIC_HEIGHT; row++)
+        for (int row = 0; row < PIC_HEIGHT; row++)
         {
-            for (Int32 column = 0; column < PIC_WIDTH; column += 8) //'every 8 pixel is one byte
+            for (int column = 0; column < PIC_WIDTH; column += 8) //'every 8 pixel is one byte
             {
                 tmp_byte = PIC_BUFFER[index];
                 if (GetBit(tmp_byte, 7) == true) PICTURE_BMP.SetPixel(column, row, Color.Black);
@@ -526,7 +525,7 @@ public partial class Accessory
         PIC_BUFFER = new byte[(PIC_WIDTH * picMode * pages + pages * 6)]; //add 6 control bytes to bit fields for each part
 
         byte tmp_byte = 0;
-        Int32 index = 0;
+        int index = 0;
         for (int row = 0; row < PIC_HEIGHT; row += 8 * picMode) //'every 8/24 pixel is one/three byte
         {
             PIC_BUFFER[index] = 0x1B;
