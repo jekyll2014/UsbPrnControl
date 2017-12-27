@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 public partial class Accessory
 {
-    public static string ConvertHexToString(string hexString)
+    public static string ConvertHexToString(string hexString, int cp = 866)
     {
         hexString = hexString.Replace(" ", "");
         if (hexString.Length % 2 == 1) return "";
@@ -19,7 +19,7 @@ public partial class Accessory
             hexString = hexString.Substring(2, hexString.Length - 2);
             i++;
         }
-        return System.Text.Encoding.ASCII.GetString(StrValue, 0, i);
+        return System.Text.Encoding.GetEncoding(cp).GetString(StrValue, 0, i);
     }
 
     public static byte[] ConvertHexToByteArray(string hexString)
@@ -65,9 +65,9 @@ public partial class Accessory
         return int.Parse(hexString, NumberStyles.HexNumber);
     }
 
-    public static string ConvertStringToHex(string utfString)
+    public static string ConvertStringToHex(string utfString, int cp = 866)
     {
-        byte[] encodedBytes = System.Text.Encoding.ASCII.GetBytes(utfString);
+        byte[] encodedBytes = System.Text.Encoding.GetEncoding(cp).GetBytes(utfString);
         string hexStr = "";
         foreach (System.Char c in encodedBytes)
         {
@@ -76,7 +76,8 @@ public partial class Accessory
         return hexStr;
     }
 
-    public static string ConvertDecToString(string decString)  //???? check negative values
+    //???? check negative values
+    public static string ConvertDecToString(string decString, int cp = 866)
     {
         decString = decString.Replace(" ", "");
         if (decString.Length % 3 == 1) return "";
@@ -89,7 +90,7 @@ public partial class Accessory
             decString = decString.Substring(3, decString.Length - 3);
             i++;
         }
-        return System.Text.Encoding.ASCII.GetString(StrValue, 0, i);
+        return System.Text.Encoding.GetEncoding(cp).GetString(StrValue, 0, i);
     }
 
     public static string ConvertDecToHex(string DecString)
@@ -99,9 +100,9 @@ public partial class Accessory
         return HexString;
     }
 
-    public static string ConvertStringToDec(string utfString)
+    public static string ConvertStringToDec(string utfString, int cp = 866)
     {
-        byte[] encodedBytes = System.Text.Encoding.ASCII.GetBytes(utfString);
+        byte[] encodedBytes = System.Text.Encoding.GetEncoding(cp).GetBytes(utfString);
         string hexStr = "";
         foreach (System.Char c in encodedBytes)
         {
@@ -110,7 +111,8 @@ public partial class Accessory
         return hexStr;
     }
 
-    public static string ConvertBinToString(string binString)  //???? check negative values
+    //???? check negative values
+    public static string ConvertBinToString(string binString, int cp = 866)
     {
         binString = binString.Replace(" ", "");
         if (binString.Length % 8 == 1) return "";
@@ -122,12 +124,12 @@ public partial class Accessory
             binString = binString.Substring(8, binString.Length - 8);
             i++;
         }
-        return System.Text.Encoding.ASCII.GetString(StrValue, 0, i);
+        return System.Text.Encoding.GetEncoding(cp).GetString(StrValue, 0, i);
     }
 
-    public static string ConvertStringToBin(string utfString)
+    public static string ConvertStringToBin(string utfString, int cp = 866)
     {
-        byte[] encodedBytes = System.Text.Encoding.ASCII.GetBytes(utfString);
+        byte[] encodedBytes = System.Text.Encoding.GetEncoding(cp).GetBytes(utfString);
         string hexStr = "";
         foreach (System.Char c in encodedBytes)
         {
@@ -173,7 +175,8 @@ public partial class Accessory
         else return ("");
     }
 
-    public static string CheckDecString(string inStr)  //добавить фильтрацию значений >255
+    //добавить фильтрацию значений >255
+    public static string CheckDecString(string inStr)
     {
         string outStr = "";
         if (inStr != "")
@@ -208,7 +211,44 @@ public partial class Accessory
         else return ("");
     }
 
-    public static string CheckBinString(string inStr)  // проверить
+    //добавить фильтрацию значений >255
+    public static string CheckDecString(string inStr, int length)
+    {
+        string outStr = "";
+        if (inStr != "")
+        {
+            char[] str = inStr.ToCharArray(0, inStr.Length);
+            string tmpStr = "";
+            for (int i = 0; i < inStr.Length; i++)
+            {
+                if (str[i] >= '0' && str[i] <= '9')
+                {
+                    tmpStr += str[i].ToString();
+                }
+                else if (str[i] == ' ' && tmpStr.Length > 0)
+                {
+                    for (int i1 = 0; i1 < length - tmpStr.Length; i1++) outStr += "0";
+                    outStr += tmpStr + " ";
+                    tmpStr = "";
+                }
+                if (tmpStr.Length == length)
+                {
+                    outStr += tmpStr + " ";
+                    tmpStr = "";
+                }
+            }
+            if (tmpStr != "")
+            {
+                for (int i = 0; i < length - tmpStr.Length; i++) outStr += "0";
+                outStr += tmpStr + " ";
+            }
+            return outStr;
+        }
+        else return ("");
+    }
+
+    // проверить
+    public static string CheckBinString(string inStr)
     {
         string outStr = "";
         if (inStr != "")
@@ -243,7 +283,8 @@ public partial class Accessory
         else return ("");
     }
 
-    public static int GetStringFormat(string inString)  //определение формата строки
+    //определение формата строки
+    public static int GetStringFormat(string inString)
     {
         int i = 0, i1 = 0;
         //bool xbin = true, xdec = true;
@@ -344,6 +385,18 @@ public partial class Accessory
     public static bool GetBit(byte b, byte bitNumber)
     {
         return (b & (1 << bitNumber)) != 0;
+    }
+
+    public static byte SetBit(byte b, byte bitNumber)
+    {
+        b = (byte)(b | (1 << bitNumber));
+        return b;
+    }
+
+    public static byte ClearBit(byte b, byte bitNumber)
+    {
+        b = (byte)(b & ~(1 << bitNumber));
+        return b;
     }
 
     public static long Evaluate(string expression)  //calculate string formula
