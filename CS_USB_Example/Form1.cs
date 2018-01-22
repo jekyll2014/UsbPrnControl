@@ -405,6 +405,7 @@ namespace UsbPrnControl
                     Selected_Printer.WRITE_TIMEOUT = 500;
                     if (Selected_Printer.OpenDevice())
                     {
+                        timer1.Enabled = true;
                         button_Refresh.Enabled = false;
                         button_Open.Enabled = false;
                         comboBox_Printer.Enabled = false;
@@ -426,6 +427,7 @@ namespace UsbPrnControl
 
         private void button_CLOSE_Click(object sender, EventArgs e)
         {
+            timer1.Enabled = false;
             if (Selected_Printer != null)
             {
                 Selected_Printer.CloseDevice();
@@ -442,21 +444,29 @@ namespace UsbPrnControl
 
         private void button_WRITE_Click(object sender, EventArgs e)
         {
-            if (Selected_Printer != null && textBox_command.Text + textBox_param.Text != "")
+            if (Selected_Printer != null)
             {
-                string outStr;
-                if (checkBox_hexCommand.Checked) outStr = textBox_command.Text;
-                else outStr = Accessory.ConvertStringToHex(textBox_command.Text);
-                if (checkBox_hexParam.Checked) outStr += textBox_param.Text;
-                else outStr += Accessory.ConvertStringToHex(textBox_param.Text);
-
-                if (checkBox_hexTerminal.Checked) collectBuffer(outStr, Port1DataOut, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
-                else collectBuffer(Accessory.ConvertHexToString(outStr), Port1DataOut, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
-                textBox_command.AutoCompleteCustomSource.Add(textBox_command.Text);
-                textBox_param.AutoCompleteCustomSource.Add(textBox_param.Text);
-                if (Selected_Printer.GenericWrite(Accessory.ConvertHexToByteArray(outStr))) ReadUSB();
-                else collectBuffer("Write failure", Port1Error, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
+                if (textBox_command.Text + textBox_param.Text != "")
+                {
+                    string outStr;
+                    if (checkBox_hexCommand.Checked) outStr = textBox_command.Text;
+                    else outStr = Accessory.ConvertStringToHex(textBox_command.Text);
+                    if (checkBox_hexParam.Checked) outStr += textBox_param.Text;
+                    else outStr += Accessory.ConvertStringToHex(textBox_param.Text);
+                    if (outStr != "")
+                    {
+                        timer1.Enabled = false;
+                        if (checkBox_hexTerminal.Checked) collectBuffer(outStr, Port1DataOut, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
+                        else collectBuffer(Accessory.ConvertHexToString(outStr), Port1DataOut, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
+                        textBox_command.AutoCompleteCustomSource.Add(textBox_command.Text);
+                        textBox_param.AutoCompleteCustomSource.Add(textBox_param.Text);
+                        if (Selected_Printer.GenericWrite(Accessory.ConvertHexToByteArray(outStr))) ReadUSB();
+                        else collectBuffer("Write failure", Port1Error, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
+                        timer1.Enabled = true;
+                    }
+                }
             }
+            else button_CLOSE_Click(this, EventArgs.Empty);
         }
 
         private void ReadUSB()
@@ -474,6 +484,7 @@ namespace UsbPrnControl
                     else collectBuffer(Encoding.GetEncoding(Properties.Settings.Default.CodePage).GetString(PRINTER_ANSWER), Port1DataIn, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
                 }
             }
+            else button_CLOSE_Click(this, EventArgs.Empty);
         }
 
         private void RefreshUSB()
@@ -523,11 +534,6 @@ namespace UsbPrnControl
             textBox_terminal.Clear();
         }
 
-        private void textBox_terminal_Click(object sender, EventArgs e)
-        {
-            ReadUSB();
-        }
-
         private void checkBox_saveTo_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox_saveInput.Checked || checkBox_saveOutput.Checked) textBox_saveTo.Enabled = false;
@@ -542,10 +548,12 @@ namespace UsbPrnControl
             }
             else if (SendComing == 0)
             {
+                timer1.Enabled = false;
                 UInt16 repeat = 1, delay = 1, strDelay = 1;
 
                 if (textBox_fileName.Text != "" && textBox_sendNum.Text != "" && UInt16.TryParse(textBox_sendNum.Text, out repeat) && UInt16.TryParse(textBox_delay.Text, out delay) && UInt16.TryParse(textBox_strDelay.Text, out strDelay))
                 {
+                    timer1.Enabled = false;
                     SendComing = 1;
                     button_Send.Enabled = false;
                     button_closeport.Enabled = false;
@@ -675,8 +683,8 @@ namespace UsbPrnControl
                                 tmpBuffer = Accessory.CheckHexString(tmpBuffer);
                                 for (int m = 0; m < tmpBuffer.Length; m += 3)
                                 {
-                                        if (checkBox_hexTerminal.Checked) outStr = tmpBuffer.Substring(m, 3);
-                                        else outStr = Accessory.ConvertHexToString(tmpBuffer.Substring(m, 3));
+                                    if (checkBox_hexTerminal.Checked) outStr = tmpBuffer.Substring(m, 3);
+                                    else outStr = Accessory.ConvertHexToString(tmpBuffer.Substring(m, 3));
                                     collectBuffer(outStr, Port1DataOut, DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3"));
                                     if (Selected_Printer.GenericWrite(Accessory.ConvertHexToByteArray(tmpBuffer.Substring(m, 3))))
                                     {
@@ -727,6 +735,7 @@ namespace UsbPrnControl
                     textBox_strDelay.Enabled = true;
                 }
                 SendComing = 0;
+                timer1.Enabled = true;
             }
         }
 
@@ -785,6 +794,7 @@ namespace UsbPrnControl
             textBox_command.Text = Properties.Settings.Default.textBox_command;
             checkBox_hexParam.Checked = Properties.Settings.Default.checkBox_hexParam;
             textBox_param.Text = Properties.Settings.Default.textBox_param;
+            timer1.Interval = Properties.Settings.Default.USBReadInterval;
         }
 
         private void radioButton_stream_CheckedChanged(object sender, EventArgs e)
@@ -806,6 +816,11 @@ namespace UsbPrnControl
                 m_pGuid = new Guid(Properties.Settings.Default.GUID_PRINT);
                 RefreshUSB();
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ReadUSB();
         }
 
         private void checkBox_scanner_CheckedChanged(object sender, EventArgs e)

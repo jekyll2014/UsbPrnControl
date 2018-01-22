@@ -26,5 +26,8 @@
     <Setting Name="GUID_SCAN" Type="System.String" Scope="User">
       <Value Profile="(Default)">5B51A523-CEAD-4468-99DD-BF85B80E0A64</Value>
     </Setting>
+    <Setting Name="USBReadInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
