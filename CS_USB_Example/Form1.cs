@@ -333,7 +333,7 @@ namespace UsbPrnControl
 
         int SendComing = 0;
         int txtOutState = 0;
-        long oldTicks = DateTime.Now.Ticks, limitTick = 0;
+        long oldTicks = DateTime.Now.Ticks, limitTick = 200;
         public const byte Port1DataIn = 11;
         public const byte Port1DataOut = 12;
         public const byte Port1Error = 15;
@@ -796,6 +796,8 @@ namespace UsbPrnControl
             checkBox_hexParam.Checked = Properties.Settings.Default.checkBox_hexParam;
             textBox_param.Text = Properties.Settings.Default.textBox_param;
             timer1.Interval = Properties.Settings.Default.USBReadInterval;
+            limitTick= Properties.Settings.Default.LineBreakTimeout;
+            limitTick *= 10000;
         }
 
         private void radioButton_stream_CheckedChanged(object sender, EventArgs e)

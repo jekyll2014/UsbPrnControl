@@ -131,5 +131,17 @@ namespace UsbPrnControl.Properties {
                 this["USBReadInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int LineBreakTimeout {
+            get {
+                return ((int)(this["LineBreakTimeout"]));
+            }
+            set {
+                this["LineBreakTimeout"] = value;
+            }
+        }
     }
 }
