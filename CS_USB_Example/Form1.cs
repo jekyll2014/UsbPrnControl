@@ -338,28 +338,48 @@ namespace UsbPrnControl
         public const byte Port1DataOut = 12;
         public const byte Port1Error = 15;
 
+        delegate void SetTextCallback1(string text);
+        private void SetText(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            //if (this.textBox_terminal1.InvokeRequired)
+            if (this.textBox_terminal.InvokeRequired)
+            {
+                SetTextCallback1 d = new SetTextCallback1(SetText);
+                this.BeginInvoke(d, new object[] { text });
+            }
+            else
+            {
+                int pos = textBox_terminal.SelectionStart;
+                this.textBox_terminal.Text += text;
+                if (checkBox_autoscroll.Checked)
+                {
+                    textBox_terminal.SelectionStart = textBox_terminal.Text.Length;
+                    textBox_terminal.ScrollToCaret();
+                }
+                else
+                {
+                    textBox_terminal.SelectionStart = pos;
+                    textBox_terminal.ScrollToCaret();
+                }
+            }
+        }
+
         private object threadLock = new object();
         public void collectBuffer(string tmpBuffer, int state)
         {
             if (tmpBuffer != "")
             {
-                string time=DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3");
+                string time = DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3");
                 lock (threadLock)
                 {
                     if (!(txtOutState == state && (DateTime.Now.Ticks - oldTicks) < limitTick && state != Port1DataOut))
                     {
-                        if (state == Port1DataIn)
-                        {
-                            tmpBuffer = "<< " + tmpBuffer;
-                        }
-                        else if (state == Port1DataOut)
-                        {
-                            tmpBuffer = ">> " + tmpBuffer;
-                        }
-                        else if (state == Port1Error)
-                        {
-                            tmpBuffer = "!! " + tmpBuffer;
-                        }
+                        if (state == Port1DataIn) tmpBuffer = "<< " + tmpBuffer;         //sending data
+                        else if (state == Port1DataOut) tmpBuffer = ">> " + tmpBuffer;    //receiving data
+                        else if (state == Port1Error) tmpBuffer = "!! " + tmpBuffer;    //error occured
 
                         if (checkBox_saveTime.Checked == true) tmpBuffer = time + " " + tmpBuffer;
                         tmpBuffer = "\r\n" + tmpBuffer;
@@ -376,8 +396,7 @@ namespace UsbPrnControl
                             MessageBox.Show("\r\nError opening file " + textBox_saveTo.Text + ": " + ex.Message);
                         }
                     }
-                    textBox_terminal.SelectionStart = textBox_terminal.TextLength;
-                    textBox_terminal.SelectedText = tmpBuffer;
+                    SetText(tmpBuffer);
                     oldTicks = DateTime.Now.Ticks;
                 }
             }
