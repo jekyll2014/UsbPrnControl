@@ -334,6 +334,7 @@ namespace UsbPrnControl
         int SendComing = 0;
         int txtOutState = 0;
         long oldTicks = DateTime.Now.Ticks, limitTick = 200;
+        int LogLinesLimit = 100;
         public const byte Port1DataIn = 11;
         public const byte Port1DataOut = 12;
         public const byte Port1Error = 15;
@@ -345,15 +346,25 @@ namespace UsbPrnControl
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             //if (this.textBox_terminal1.InvokeRequired)
-            if (this.textBox_terminal.InvokeRequired)
+            if (textBox_terminal.InvokeRequired)
             {
                 SetTextCallback1 d = new SetTextCallback1(SetText);
-                this.BeginInvoke(d, new object[] { text });
+                BeginInvoke(d, new object[] { text });
             }
             else
             {
                 int pos = textBox_terminal.SelectionStart;
-                this.textBox_terminal.Text += text;
+                textBox_terminal.AppendText(text);
+                if (textBox_terminal.Lines.Length > LogLinesLimit)
+                {
+                    StringBuilder tmp = new StringBuilder();
+                    for (int i = textBox_terminal.Lines.Length - LogLinesLimit; i < textBox_terminal.Lines.Length; i++)
+                    {
+                        tmp.Append(textBox_terminal.Lines[i]);
+                        tmp.Append("\r\n");
+                    }
+                    textBox_terminal.Text = tmp.ToString();
+                }
                 if (checkBox_autoscroll.Checked)
                 {
                     textBox_terminal.SelectionStart = textBox_terminal.Text.Length;
@@ -812,6 +823,7 @@ namespace UsbPrnControl
             timer1.Interval = Properties.Settings.Default.USBReadInterval;
             limitTick= Properties.Settings.Default.LineBreakTimeout;
             limitTick *= 10000;
+            LogLinesLimit = Properties.Settings.Default.LogLinesLimit;
         }
 
         private void radioButton_stream_CheckedChanged(object sender, EventArgs e)
