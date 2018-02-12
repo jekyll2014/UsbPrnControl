@@ -495,11 +495,6 @@ namespace UsbPrnControl
             {
                 if (Selected_Printer.GenericRead(ref PRINTER_ANSWER))
                 {
-                    /*if (checkBox_saveInput.Checked)
-                    {
-                        if (checkBox_hexTerminal.Checked) File.AppendAllText(textBox_saveTo.Text, Accessory.ConvertByteArrayToHex(PRINTER_ANSWER, PRINTER_ANSWER.Length), Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage));
-                        else File.AppendAllText(textBox_saveTo.Text, Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage).GetString(PRINTER_ANSWER), Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage));
-                    }*/
                     if (checkBox_hexTerminal.Checked) collectBuffer(Accessory.ConvertByteArrayToHex(PRINTER_ANSWER, PRINTER_ANSWER.Length), Port1DataIn);
                     else collectBuffer(Encoding.GetEncoding(Properties.Settings.Default.CodePage).GetString(PRINTER_ANSWER), Port1DataIn);
                 }
