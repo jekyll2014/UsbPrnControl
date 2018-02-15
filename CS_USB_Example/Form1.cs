@@ -622,7 +622,7 @@ namespace UsbPrnControl
                                     byte[] outByte = { tmpBuffer[m] };
                                     if (checkBox_hexTerminal.Checked) outStr = Accessory.ConvertByteArrayToHex(tmpBuffer, tmpBuffer.Length);
                                     //else outStr = ConvertHexToString(ConvertByteArrToHex(tmpBuffer, tmpBuffer.Length));
-                                    else outStr = tmpBuffer.ToString();
+                                    else outStr = Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage).GetString(tmpBuffer);
                                     collectBuffer(outStr, Port1DataOut);
                                     if (Selected_Printer.GenericWrite(outByte))
                                     {
@@ -651,7 +651,7 @@ namespace UsbPrnControl
                                 }
                                 if (checkBox_hexTerminal.Checked) outStr = Accessory.ConvertByteArrayToHex(tmpBuffer, tmpBuffer.Length);
                                 //else outStr += ConvertHexToString(ConvertByteArrToHex(tmpBuffer, tmpBuffer.Length));
-                                else outStr = tmpBuffer.ToString();
+                                else outStr = Encoding.GetEncoding(UsbPrnControl.Properties.Settings.Default.CodePage).GetString(tmpBuffer);
                                 collectBuffer(outStr, Port1DataOut);
                                 if (Selected_Printer.GenericWrite(tmpBuffer)) ReadUSB();
                                 else outErr = "Write Failure";
