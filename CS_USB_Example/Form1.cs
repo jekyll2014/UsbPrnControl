@@ -627,7 +627,7 @@ namespace UsbPrnControl
                                     if (Selected_Printer.GenericWrite(outByte))
                                     {
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        await TaskEx.Delay(strDelay);
+                                        if (strDelay > 0) await TaskEx.Delay(strDelay);
                                         ReadUSB();
                                     }
                                     else
@@ -681,7 +681,7 @@ namespace UsbPrnControl
                                     {
                                         if (checkBox_hexTerminal.Checked) outStr = tmpBuffer[m];
                                         else outStr = Accessory.ConvertHexToString(tmpBuffer[m]);
-                                        await TaskEx.Delay(strDelay);
+                                        if (strDelay > 0) await TaskEx.Delay(strDelay);
                                         ReadUSB();
                                     }
                                     else  //??????????????
@@ -714,7 +714,7 @@ namespace UsbPrnControl
                                     collectBuffer(outStr, Port1DataOut);
                                     if (Selected_Printer.GenericWrite(Accessory.ConvertHexToByteArray(tmpBuffer.Substring(m, 3))))
                                     {
-                                        await TaskEx.Delay(strDelay);
+                                        if (strDelay > 0) await TaskEx.Delay(strDelay);
                                         ReadUSB();
                                     }
                                     else
