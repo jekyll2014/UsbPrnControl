@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
@@ -436,6 +435,23 @@ public partial class Accessory
             Application.DoEvents();
             System.Threading.Thread.Sleep(1);
         }
+    }
+
+    public bool ArrayEqual(byte[] a1, byte[] b1)
+    {
+        if (a1.Length != b1.Length)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < a1.Length; i++)
+        {
+            if (a1[i] != b1[i])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
