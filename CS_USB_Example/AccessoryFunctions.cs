@@ -426,6 +426,20 @@ public partial class Accessory
         return (long)(loDataTable.Rows[0]["Eval"]);
     }
 
+    public static long EvaluateVariables(string expression, string[] variables = null, string[] values = null)  //calculate string formula
+    {
+        if (variables != null)
+        {
+            if (variables.Length != values.Length) return 0;
+            for (int i = 0; i < variables.Length; i++) expression = expression.Replace(variables[i], values[i]);
+        }
+        var loDataTable = new DataTable();
+        var loDataColumn = new DataColumn("Eval", typeof(long), expression);
+        loDataTable.Columns.Add(loDataColumn);
+        loDataTable.Rows.Add(0);
+        return (long)(loDataTable.Rows[0]["Eval"]);
+    }
+
     public static void Delay_ms(long milisec)
     {
         DateTime start = DateTime.Now;
