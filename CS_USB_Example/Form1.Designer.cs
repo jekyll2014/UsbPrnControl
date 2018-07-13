@@ -252,7 +252,7 @@ namespace UsbPrnControl
             this.checkBox_saveInput.AutoSize = true;
             this.checkBox_saveInput.Checked = true;
             this.checkBox_saveInput.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveInput.Location = new System.Drawing.Point(233, 233);
+            this.checkBox_saveInput.Location = new System.Drawing.Point(236, 233);
             this.checkBox_saveInput.Name = "checkBox_saveInput";
             this.checkBox_saveInput.Size = new System.Drawing.Size(49, 17);
             this.checkBox_saveInput.TabIndex = 98;
@@ -264,7 +264,7 @@ namespace UsbPrnControl
             // 
             this.textBox_saveTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox_saveTo.Enabled = false;
-            this.textBox_saveTo.Location = new System.Drawing.Point(350, 231);
+            this.textBox_saveTo.Location = new System.Drawing.Point(353, 231);
             this.textBox_saveTo.Name = "textBox_saveTo";
             this.textBox_saveTo.Size = new System.Drawing.Size(62, 20);
             this.textBox_saveTo.TabIndex = 14;
@@ -465,7 +465,7 @@ namespace UsbPrnControl
             this.checkBox_saveTime.AutoSize = true;
             this.checkBox_saveTime.Checked = true;
             this.checkBox_saveTime.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveTime.Location = new System.Drawing.Point(182, 233);
+            this.checkBox_saveTime.Location = new System.Drawing.Point(144, 233);
             this.checkBox_saveTime.Name = "checkBox_saveTime";
             this.checkBox_saveTime.Size = new System.Drawing.Size(45, 17);
             this.checkBox_saveTime.TabIndex = 116;
@@ -478,7 +478,7 @@ namespace UsbPrnControl
             this.checkBox_saveOutput.AutoSize = true;
             this.checkBox_saveOutput.Checked = true;
             this.checkBox_saveOutput.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveOutput.Location = new System.Drawing.Point(288, 233);
+            this.checkBox_saveOutput.Location = new System.Drawing.Point(291, 233);
             this.checkBox_saveOutput.Name = "checkBox_saveOutput";
             this.checkBox_saveOutput.Size = new System.Drawing.Size(56, 17);
             this.checkBox_saveOutput.TabIndex = 98;
@@ -490,11 +490,11 @@ namespace UsbPrnControl
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(144, 235);
+            this.label2.Location = new System.Drawing.Point(195, 234);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 117;
-            this.label2.Text = "Save";
+            this.label2.Text = "Save:";
             // 
             // timer1
             // 
