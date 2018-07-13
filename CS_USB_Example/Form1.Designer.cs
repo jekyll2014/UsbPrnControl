@@ -85,7 +85,7 @@ namespace UsbPrnControl
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox_Printer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Printer.FormattingEnabled = true;
-            this.comboBox_Printer.Location = new System.Drawing.Point(12, 25);
+            this.comboBox_Printer.Location = new System.Drawing.Point(12, 43);
             this.comboBox_Printer.Name = "comboBox_Printer";
             this.comboBox_Printer.Size = new System.Drawing.Size(560, 21);
             this.comboBox_Printer.TabIndex = 1;
@@ -93,7 +93,7 @@ namespace UsbPrnControl
             // label_UsbPrnList
             // 
             this.label_UsbPrnList.AutoSize = true;
-            this.label_UsbPrnList.Location = new System.Drawing.Point(12, 9);
+            this.label_UsbPrnList.Location = new System.Drawing.Point(12, 18);
             this.label_UsbPrnList.Name = "label_UsbPrnList";
             this.label_UsbPrnList.Size = new System.Drawing.Size(64, 13);
             this.label_UsbPrnList.TabIndex = 1;
@@ -101,7 +101,8 @@ namespace UsbPrnControl
             // 
             // button_Open
             // 
-            this.button_Open.Location = new System.Drawing.Point(12, 52);
+            this.button_Open.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Open.Location = new System.Drawing.Point(350, 12);
             this.button_Open.Name = "button_Open";
             this.button_Open.Size = new System.Drawing.Size(70, 25);
             this.button_Open.TabIndex = 2;
@@ -112,7 +113,7 @@ namespace UsbPrnControl
             // button_Refresh
             // 
             this.button_Refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Refresh.Location = new System.Drawing.Point(502, 52);
+            this.button_Refresh.Location = new System.Drawing.Point(502, 12);
             this.button_Refresh.Name = "button_Refresh";
             this.button_Refresh.Size = new System.Drawing.Size(70, 25);
             this.button_Refresh.TabIndex = 0;
@@ -122,8 +123,9 @@ namespace UsbPrnControl
             // 
             // button_closeport
             // 
+            this.button_closeport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_closeport.Enabled = false;
-            this.button_closeport.Location = new System.Drawing.Point(88, 52);
+            this.button_closeport.Location = new System.Drawing.Point(426, 12);
             this.button_closeport.Name = "button_closeport";
             this.button_closeport.Size = new System.Drawing.Size(70, 25);
             this.button_closeport.TabIndex = 16;
@@ -134,7 +136,7 @@ namespace UsbPrnControl
             // button_Send
             // 
             this.button_Send.Enabled = false;
-            this.button_Send.Location = new System.Drawing.Point(12, 83);
+            this.button_Send.Location = new System.Drawing.Point(12, 70);
             this.button_Send.Name = "button_Send";
             this.button_Send.Size = new System.Drawing.Size(70, 47);
             this.button_Send.TabIndex = 7;
@@ -149,7 +151,7 @@ namespace UsbPrnControl
             this.textBox_command.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBox_command.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox_command.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_command.Location = new System.Drawing.Point(186, 83);
+            this.textBox_command.Location = new System.Drawing.Point(186, 70);
             this.textBox_command.Name = "textBox_command";
             this.textBox_command.Size = new System.Drawing.Size(386, 20);
             this.textBox_command.TabIndex = 4;
@@ -161,13 +163,13 @@ namespace UsbPrnControl
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_terminal.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_terminal.Location = new System.Drawing.Point(12, 198);
+            this.textBox_terminal.Location = new System.Drawing.Point(12, 185);
             this.textBox_terminal.MaxLength = 3276700;
             this.textBox_terminal.Multiline = true;
             this.textBox_terminal.Name = "textBox_terminal";
             this.textBox_terminal.ReadOnly = true;
             this.textBox_terminal.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox_terminal.Size = new System.Drawing.Size(560, 21);
+            this.textBox_terminal.Size = new System.Drawing.Size(560, 34);
             this.textBox_terminal.TabIndex = 17;
             // 
             // checkBox_hexCommand
@@ -175,7 +177,7 @@ namespace UsbPrnControl
             this.checkBox_hexCommand.AutoSize = true;
             this.checkBox_hexCommand.Checked = true;
             this.checkBox_hexCommand.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_hexCommand.Location = new System.Drawing.Point(88, 89);
+            this.checkBox_hexCommand.Location = new System.Drawing.Point(88, 76);
             this.checkBox_hexCommand.Name = "checkBox_hexCommand";
             this.checkBox_hexCommand.Size = new System.Drawing.Size(92, 17);
             this.checkBox_hexCommand.TabIndex = 3;
@@ -214,7 +216,7 @@ namespace UsbPrnControl
             this.checkBox_hexParam.AutoSize = true;
             this.checkBox_hexParam.Checked = true;
             this.checkBox_hexParam.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_hexParam.Location = new System.Drawing.Point(88, 112);
+            this.checkBox_hexParam.Location = new System.Drawing.Point(88, 99);
             this.checkBox_hexParam.Name = "checkBox_hexParam";
             this.checkBox_hexParam.Size = new System.Drawing.Size(93, 17);
             this.checkBox_hexParam.TabIndex = 5;
@@ -229,7 +231,7 @@ namespace UsbPrnControl
             this.textBox_param.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBox_param.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox_param.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_param.Location = new System.Drawing.Point(186, 110);
+            this.textBox_param.Location = new System.Drawing.Point(186, 97);
             this.textBox_param.Name = "textBox_param";
             this.textBox_param.Size = new System.Drawing.Size(386, 20);
             this.textBox_param.TabIndex = 6;
@@ -248,11 +250,11 @@ namespace UsbPrnControl
             // 
             // checkBox_saveInput
             // 
-            this.checkBox_saveInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox_saveInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox_saveInput.AutoSize = true;
             this.checkBox_saveInput.Checked = true;
             this.checkBox_saveInput.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveInput.Location = new System.Drawing.Point(233, 233);
+            this.checkBox_saveInput.Location = new System.Drawing.Point(317, 233);
             this.checkBox_saveInput.Name = "checkBox_saveInput";
             this.checkBox_saveInput.Size = new System.Drawing.Size(49, 17);
             this.checkBox_saveInput.TabIndex = 98;
@@ -262,9 +264,9 @@ namespace UsbPrnControl
             // 
             // textBox_saveTo
             // 
-            this.textBox_saveTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox_saveTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_saveTo.Enabled = false;
-            this.textBox_saveTo.Location = new System.Drawing.Point(350, 231);
+            this.textBox_saveTo.Location = new System.Drawing.Point(434, 231);
             this.textBox_saveTo.Name = "textBox_saveTo";
             this.textBox_saveTo.Size = new System.Drawing.Size(62, 20);
             this.textBox_saveTo.TabIndex = 14;
@@ -272,7 +274,7 @@ namespace UsbPrnControl
             // 
             // button_openFile
             // 
-            this.button_openFile.Location = new System.Drawing.Point(12, 136);
+            this.button_openFile.Location = new System.Drawing.Point(12, 123);
             this.button_openFile.MinimumSize = new System.Drawing.Size(70, 25);
             this.button_openFile.Name = "button_openFile";
             this.button_openFile.Size = new System.Drawing.Size(70, 25);
@@ -288,7 +290,7 @@ namespace UsbPrnControl
             this.textBox_fileName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBox_fileName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox_fileName.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_fileName.Location = new System.Drawing.Point(186, 139);
+            this.textBox_fileName.Location = new System.Drawing.Point(186, 126);
             this.textBox_fileName.Name = "textBox_fileName";
             this.textBox_fileName.Size = new System.Drawing.Size(310, 20);
             this.textBox_fileName.TabIndex = 9;
@@ -299,7 +301,7 @@ namespace UsbPrnControl
             this.checkBox_hexFileOpen.AutoSize = true;
             this.checkBox_hexFileOpen.Checked = true;
             this.checkBox_hexFileOpen.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_hexFileOpen.Location = new System.Drawing.Point(88, 141);
+            this.checkBox_hexFileOpen.Location = new System.Drawing.Point(88, 128);
             this.checkBox_hexFileOpen.Name = "checkBox_hexFileOpen";
             this.checkBox_hexFileOpen.Size = new System.Drawing.Size(87, 17);
             this.checkBox_hexFileOpen.TabIndex = 10;
@@ -310,7 +312,7 @@ namespace UsbPrnControl
             // button_sendFile
             // 
             this.button_sendFile.Enabled = false;
-            this.button_sendFile.Location = new System.Drawing.Point(12, 167);
+            this.button_sendFile.Location = new System.Drawing.Point(12, 154);
             this.button_sendFile.MinimumSize = new System.Drawing.Size(70, 25);
             this.button_sendFile.Name = "button_sendFile";
             this.button_sendFile.Size = new System.Drawing.Size(70, 25);
@@ -329,7 +331,7 @@ namespace UsbPrnControl
             this.textBox_delay.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBox_delay.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox_delay.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_delay.Location = new System.Drawing.Point(475, 170);
+            this.textBox_delay.Location = new System.Drawing.Point(475, 157);
             this.textBox_delay.MaxLength = 5;
             this.textBox_delay.Name = "textBox_delay";
             this.textBox_delay.Size = new System.Drawing.Size(40, 20);
@@ -342,7 +344,7 @@ namespace UsbPrnControl
             this.textBox_sendNum.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBox_sendNum.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox_sendNum.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_sendNum.Location = new System.Drawing.Point(389, 170);
+            this.textBox_sendNum.Location = new System.Drawing.Point(389, 157);
             this.textBox_sendNum.MaxLength = 5;
             this.textBox_sendNum.Name = "textBox_sendNum";
             this.textBox_sendNum.Size = new System.Drawing.Size(40, 20);
@@ -353,7 +355,7 @@ namespace UsbPrnControl
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(521, 173);
+            this.label24.Location = new System.Drawing.Point(521, 160);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(54, 13);
             this.label24.TabIndex = 107;
@@ -362,7 +364,7 @@ namespace UsbPrnControl
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(435, 173);
+            this.label23.Location = new System.Drawing.Point(435, 160);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(34, 13);
             this.label23.TabIndex = 108;
@@ -372,7 +374,7 @@ namespace UsbPrnControl
             // 
             this.radioButton_stream.AutoSize = true;
             this.radioButton_stream.Checked = true;
-            this.radioButton_stream.Location = new System.Drawing.Point(88, 171);
+            this.radioButton_stream.Location = new System.Drawing.Point(88, 158);
             this.radioButton_stream.Name = "radioButton_stream";
             this.radioButton_stream.Size = new System.Drawing.Size(59, 17);
             this.radioButton_stream.TabIndex = 112;
@@ -384,7 +386,7 @@ namespace UsbPrnControl
             // radioButton_byByte
             // 
             this.radioButton_byByte.AutoSize = true;
-            this.radioButton_byByte.Location = new System.Drawing.Point(220, 171);
+            this.radioButton_byByte.Location = new System.Drawing.Point(220, 158);
             this.radioButton_byByte.Name = "radioButton_byByte";
             this.radioButton_byByte.Size = new System.Drawing.Size(62, 17);
             this.radioButton_byByte.TabIndex = 113;
@@ -395,7 +397,7 @@ namespace UsbPrnControl
             // radioButton_byString
             // 
             this.radioButton_byString.AutoSize = true;
-            this.radioButton_byString.Location = new System.Drawing.Point(150, 171);
+            this.radioButton_byString.Location = new System.Drawing.Point(150, 158);
             this.radioButton_byString.Name = "radioButton_byString";
             this.radioButton_byString.Size = new System.Drawing.Size(67, 17);
             this.radioButton_byString.TabIndex = 114;
@@ -406,7 +408,7 @@ namespace UsbPrnControl
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(502, 139);
+            this.progressBar1.Location = new System.Drawing.Point(502, 126);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(70, 19);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -418,7 +420,7 @@ namespace UsbPrnControl
             this.textBox_strDelay.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox_strDelay.Enabled = false;
             this.textBox_strDelay.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_strDelay.Location = new System.Drawing.Point(286, 170);
+            this.textBox_strDelay.Location = new System.Drawing.Point(286, 157);
             this.textBox_strDelay.MaxLength = 5;
             this.textBox_strDelay.Name = "textBox_strDelay";
             this.textBox_strDelay.Size = new System.Drawing.Size(40, 20);
@@ -429,7 +431,7 @@ namespace UsbPrnControl
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(332, 173);
+            this.label1.Location = new System.Drawing.Point(332, 160);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 110;
@@ -440,7 +442,7 @@ namespace UsbPrnControl
             this.checkBox_printer.AutoSize = true;
             this.checkBox_printer.Checked = true;
             this.checkBox_printer.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_printer.Location = new System.Drawing.Point(82, 8);
+            this.checkBox_printer.Location = new System.Drawing.Point(82, 17);
             this.checkBox_printer.Name = "checkBox_printer";
             this.checkBox_printer.Size = new System.Drawing.Size(55, 17);
             this.checkBox_printer.TabIndex = 115;
@@ -451,7 +453,7 @@ namespace UsbPrnControl
             // checkBox_scanner
             // 
             this.checkBox_scanner.AutoSize = true;
-            this.checkBox_scanner.Location = new System.Drawing.Point(143, 8);
+            this.checkBox_scanner.Location = new System.Drawing.Point(143, 17);
             this.checkBox_scanner.Name = "checkBox_scanner";
             this.checkBox_scanner.Size = new System.Drawing.Size(64, 17);
             this.checkBox_scanner.TabIndex = 115;
@@ -465,7 +467,7 @@ namespace UsbPrnControl
             this.checkBox_saveTime.AutoSize = true;
             this.checkBox_saveTime.Checked = true;
             this.checkBox_saveTime.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveTime.Location = new System.Drawing.Point(182, 233);
+            this.checkBox_saveTime.Location = new System.Drawing.Point(144, 233);
             this.checkBox_saveTime.Name = "checkBox_saveTime";
             this.checkBox_saveTime.Size = new System.Drawing.Size(45, 17);
             this.checkBox_saveTime.TabIndex = 116;
@@ -474,11 +476,11 @@ namespace UsbPrnControl
             // 
             // checkBox_saveOutput
             // 
-            this.checkBox_saveOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox_saveOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox_saveOutput.AutoSize = true;
             this.checkBox_saveOutput.Checked = true;
             this.checkBox_saveOutput.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveOutput.Location = new System.Drawing.Point(288, 233);
+            this.checkBox_saveOutput.Location = new System.Drawing.Point(372, 233);
             this.checkBox_saveOutput.Name = "checkBox_saveOutput";
             this.checkBox_saveOutput.Size = new System.Drawing.Size(56, 17);
             this.checkBox_saveOutput.TabIndex = 98;
@@ -488,9 +490,9 @@ namespace UsbPrnControl
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(144, 235);
+            this.label2.Location = new System.Drawing.Point(279, 234);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 117;
@@ -544,7 +546,7 @@ namespace UsbPrnControl
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "UsbPrnControl (c) Andrey Kalugin (jekyll@mail.ru), 2016";
+            this.Text = "UsbPrnControl (c) Andrey Kalugin (jekyll@mail.ru), 2018";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
