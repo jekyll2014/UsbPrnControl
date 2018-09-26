@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -388,6 +390,16 @@ public partial class Accessory
         return true;
     }
 
+    public static string FilterZeroChar(string m)
+    {
+        string n = "";
+        for (int i = 0; i < m.Length; i++)
+        {
+            if (m[i] != 0) n += m[i];
+        }
+        return n;
+    }
+
     public static int CountSubString(string str, string subStr)
     {
         int count = 0;
@@ -466,6 +478,92 @@ public partial class Accessory
             }
         }
         return true;
+    }
+
+    byte crcCalc(byte[] instr)
+    {
+        byte crc = 0x00;
+        int i = 0;
+        while (i < instr.Length)
+        {
+            for (byte tempI = 8; tempI > 0; tempI--)
+            {
+                byte sum = (byte)((crc & 0xFF) ^ (instr[i] & 0xFF));
+                sum = (byte)((sum & 0xFF) & 0x01);
+
+                crc >>= 1;
+                if (sum != 0)
+                {
+                    crc ^= 0x8C;
+                }
+                instr[i] >>= 1;
+            }
+            i++;
+        }
+        return (crc);
+    }
+
+        private string CorrectFloatPoint(string s)
+        {
+            if (System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator == ".")
+                s = s.Replace(",", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
+            else
+                s = s.Replace(".", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
+            return s;
+        }
+
+    /*    
+    string[] ports = System.IO.Ports.SerialPort.GetPortNames();
+    Hashtable PortNames = BuildPortNameHash(ports);
+    foreach (String s in PortNames.Keys)
+    {
+        portDesc.Add(PortNames[s].ToString() + ": " + s);
+    } 
+    */
+    Hashtable BuildPortNameHash(string[] oPortsToMap)
+    {
+        Hashtable oReturnTable = new Hashtable();
+        MineRegistryForPortName("SYSTEM\\CurrentControlSet\\Enum", oReturnTable, oPortsToMap);
+        return oReturnTable;
+    }
+
+    void MineRegistryForPortName(string strStartKey, Hashtable oTargetMap, string[] oPortNamesToMatch)
+    {
+        if (oTargetMap.Count >= oPortNamesToMatch.Length)
+            return;
+        RegistryKey oCurrentKey = Registry.LocalMachine;
+
+        try
+        {
+            oCurrentKey = oCurrentKey.OpenSubKey(strStartKey);
+
+            string[] oSubKeyNames = oCurrentKey.GetSubKeyNames();
+            if (((IList<string>)oSubKeyNames).Contains("Device Parameters") && strStartKey != "SYSTEM\\CurrentControlSet\\Enum")
+            {
+                object oPortNameValue = Registry.GetValue("HKEY_LOCAL_MACHINE\\" + strStartKey + "\\Device Parameters", "PortName", null);
+
+                if (oPortNameValue == null || ((IList<string>)oPortNamesToMatch).Contains(oPortNameValue.ToString()) == false)
+                    return;
+                object oFriendlyName = Registry.GetValue("HKEY_LOCAL_MACHINE\\" + strStartKey, "FriendlyName", null);
+
+                string strFriendlyName = "N/A";
+
+                if (oFriendlyName != null)
+                    strFriendlyName = oFriendlyName.ToString();
+                if (strFriendlyName.Contains(oPortNameValue.ToString()) == false)
+                    strFriendlyName = string.Format("{0} ({1})", strFriendlyName, oPortNameValue);
+                oTargetMap[strFriendlyName] = oPortNameValue;
+            }
+            else
+            {
+                foreach (string strSubKey in oSubKeyNames)
+                    MineRegistryForPortName(strStartKey + "\\" + strSubKey, oTargetMap, oPortNamesToMatch);
+            }
+        }
+        catch
+        {
+
+        }
     }
 
 }
