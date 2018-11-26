@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -337,6 +338,7 @@ public partial class Accessory
 
     public static string ConvertByteArrayToHex(byte[] byteArr)
     {
+        if (byteArr == null) return "";
         StringBuilder hexStr = new StringBuilder();
         int i = 0;
         for (i = 0; i < byteArr.Length; i++)
@@ -349,6 +351,7 @@ public partial class Accessory
 
     public static string ConvertByteArrayToHex(byte[] byteArr, int Length)
     {
+        if (byteArr == null) return "";
         if (Length > byteArr.Length) Length = byteArr.Length;
         StringBuilder hexStr = new StringBuilder();
         int i = 0;
@@ -367,6 +370,7 @@ public partial class Accessory
 
     public static bool PrintableByteArray(byte[] str)
     {
+        if (str == null) return true;
         for (int i = 0; i < str.Length; i++)
         {
             if (str[i] < 32) return false;
@@ -390,14 +394,20 @@ public partial class Accessory
         return true;
     }
 
-    public static string FilterZeroChar(string m)
+    public static string ConvertByteArrayToString(byte[] byteArr, int codePage = 866)
     {
-        string n = "";
+        return Encoding.GetEncoding(codePage).GetString(byteArr);
+    }
+
+    public static string FilterZeroChar(string m, bool replaceWithSpace = true)
+    {
+        StringBuilder n = new StringBuilder();
         for (int i = 0; i < m.Length; i++)
         {
-            if (m[i] != 0) n += m[i];
+            if (m[i] != 0) n.Append(m[i]);
+            else if (replaceWithSpace) n.Append(" ");
         }
-        return n;
+        return n.ToString();
     }
 
     public static int CountSubString(string str, string subStr)
@@ -440,7 +450,7 @@ public partial class Accessory
 
     public static long EvaluateVariables(string expression, string[] variables = null, string[] values = null)  //calculate string formula
     {
-        if (variables != null)
+        if (variables != null && values != null)
         {
             if (variables.Length != values.Length) return 0;
             for (int i = 0; i < variables.Length; i++) expression = expression.Replace(variables[i], values[i]);
@@ -463,8 +473,10 @@ public partial class Accessory
         }
     }
 
-    public bool ArrayEqual(byte[] a1, byte[] b1)
+    public static bool ByteArrayCompare(byte[] a1, byte[] b1)
     {
+        if (a1 == null && b1 == null) return true;
+        else if (a1 == null || b1 == null) return false;
         if (a1.Length != b1.Length)
         {
             return false;
@@ -480,8 +492,17 @@ public partial class Accessory
         return true;
     }
 
-    byte crcCalc(byte[] instr)
+    public static byte[] CombineByteArrays(byte[] first, byte[] second)
     {
+        byte[] ret = new byte[first.Length + second.Length];
+        Buffer.BlockCopy(first, 0, ret, 0, first.Length);
+        Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
+        return ret;
+    }
+
+    public static byte crcCalc(byte[] instr)
+    {
+        if (instr == null) return 0;
         byte crc = 0x00;
         int i = 0;
         while (i < instr.Length)
@@ -503,31 +524,30 @@ public partial class Accessory
         return (crc);
     }
 
-        private string CorrectFloatPoint(string s)
-        {
-            if (System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator == ".")
-                s = s.Replace(",", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
-            else
-                s = s.Replace(".", System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
-            return s;
-        }
+    public static string CorrectFloatPoint(string s)
+    {
+        if (NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator == ".")
+            s = s.Replace(",", NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
+        else
+            s = s.Replace(".", NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
+        return s;
+    }
 
-    /*    
+    /* Example: 
     string[] ports = System.IO.Ports.SerialPort.GetPortNames();
     Hashtable PortNames = BuildPortNameHash(ports);
     foreach (String s in PortNames.Keys)
     {
         portDesc.Add(PortNames[s].ToString() + ": " + s);
-    } 
-    */
-    Hashtable BuildPortNameHash(string[] oPortsToMap)
+    } */
+    public static Hashtable BuildPortNameHash(string[] oPortsToMap)
     {
         Hashtable oReturnTable = new Hashtable();
         MineRegistryForPortName("SYSTEM\\CurrentControlSet\\Enum", oReturnTable, oPortsToMap);
         return oReturnTable;
     }
 
-    void MineRegistryForPortName(string strStartKey, Hashtable oTargetMap, string[] oPortNamesToMatch)
+    private static void MineRegistryForPortName(string strStartKey, Hashtable oTargetMap, string[] oPortNamesToMatch)
     {
         if (oTargetMap.Count >= oPortNamesToMatch.Length)
             return;
@@ -566,4 +586,13 @@ public partial class Accessory
         }
     }
 
+    public string AssemblyVersion()
+    {
+        return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+    }
+
+    public string ProductVersion()
+    {
+        return Application.ProductVersion.ToString();
+    }
 }
