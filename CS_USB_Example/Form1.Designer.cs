@@ -74,8 +74,6 @@ namespace UsbPrnControl
             this.checkBox_printer = new System.Windows.Forms.CheckBox();
             this.checkBox_scanner = new System.Windows.Forms.CheckBox();
             this.checkBox_saveTime = new System.Windows.Forms.CheckBox();
-            this.checkBox_saveOutput = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
@@ -108,7 +106,7 @@ namespace UsbPrnControl
             this.button_Open.TabIndex = 2;
             this.button_Open.Text = "Open";
             this.button_Open.UseVisualStyleBackColor = true;
-            this.button_Open.Click += new System.EventHandler(this.button_OPEN_Click);
+            this.button_Open.Click += new System.EventHandler(this.Button_OPEN_Click);
             // 
             // button_Refresh
             // 
@@ -119,7 +117,7 @@ namespace UsbPrnControl
             this.button_Refresh.TabIndex = 0;
             this.button_Refresh.Text = "Refresh";
             this.button_Refresh.UseVisualStyleBackColor = true;
-            this.button_Refresh.Click += new System.EventHandler(this.button_REFRESH_Click);
+            this.button_Refresh.Click += new System.EventHandler(this.Button_REFRESH_Click);
             // 
             // button_closeport
             // 
@@ -131,7 +129,7 @@ namespace UsbPrnControl
             this.button_closeport.TabIndex = 16;
             this.button_closeport.Text = "Close";
             this.button_closeport.UseVisualStyleBackColor = true;
-            this.button_closeport.Click += new System.EventHandler(this.button_CLOSE_Click);
+            this.button_closeport.Click += new System.EventHandler(this.Button_CLOSE_Click);
             // 
             // button_Send
             // 
@@ -142,7 +140,7 @@ namespace UsbPrnControl
             this.button_Send.TabIndex = 7;
             this.button_Send.Text = "Send";
             this.button_Send.UseVisualStyleBackColor = true;
-            this.button_Send.Click += new System.EventHandler(this.button_WRITE_Click);
+            this.button_Send.Click += new System.EventHandler(this.Button_WRITE_Click);
             // 
             // textBox_command
             // 
@@ -155,7 +153,7 @@ namespace UsbPrnControl
             this.textBox_command.Name = "textBox_command";
             this.textBox_command.Size = new System.Drawing.Size(386, 20);
             this.textBox_command.TabIndex = 4;
-            this.textBox_command.Leave += new System.EventHandler(this.textBox_command_Leave);
+            this.textBox_command.Leave += new System.EventHandler(this.TextBox_command_Leave);
             // 
             // textBox_terminal
             // 
@@ -169,8 +167,9 @@ namespace UsbPrnControl
             this.textBox_terminal.Name = "textBox_terminal";
             this.textBox_terminal.ReadOnly = true;
             this.textBox_terminal.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox_terminal.Size = new System.Drawing.Size(560, 34);
+            this.textBox_terminal.Size = new System.Drawing.Size(560, 37);
             this.textBox_terminal.TabIndex = 17;
+            this.textBox_terminal.TextChanged += new System.EventHandler(this.TextBox_terminal_TextChanged);
             // 
             // checkBox_hexCommand
             // 
@@ -183,7 +182,7 @@ namespace UsbPrnControl
             this.checkBox_hexCommand.TabIndex = 3;
             this.checkBox_hexCommand.Text = "hex command";
             this.checkBox_hexCommand.UseVisualStyleBackColor = true;
-            this.checkBox_hexCommand.CheckedChanged += new System.EventHandler(this.checkBox_hexCommand_CheckedChanged);
+            this.checkBox_hexCommand.CheckedChanged += new System.EventHandler(this.CheckBox_hexCommand_CheckedChanged);
             // 
             // checkBox_autoscroll
             // 
@@ -197,6 +196,7 @@ namespace UsbPrnControl
             this.checkBox_autoscroll.TabIndex = 12;
             this.checkBox_autoscroll.Text = "Autoscroll;";
             this.checkBox_autoscroll.UseVisualStyleBackColor = true;
+            this.checkBox_autoscroll.CheckedChanged += new System.EventHandler(this.CheckBox_autoscroll_CheckedChanged);
             // 
             // checkBox_hexTerminal
             // 
@@ -204,12 +204,13 @@ namespace UsbPrnControl
             this.checkBox_hexTerminal.AutoSize = true;
             this.checkBox_hexTerminal.Checked = true;
             this.checkBox_hexTerminal.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_hexTerminal.Location = new System.Drawing.Point(90, 233);
+            this.checkBox_hexTerminal.Location = new System.Drawing.Point(93, 233);
             this.checkBox_hexTerminal.Name = "checkBox_hexTerminal";
             this.checkBox_hexTerminal.Size = new System.Drawing.Size(48, 17);
             this.checkBox_hexTerminal.TabIndex = 13;
             this.checkBox_hexTerminal.Text = "Hex;";
             this.checkBox_hexTerminal.UseVisualStyleBackColor = true;
+            this.checkBox_hexTerminal.CheckedChanged += new System.EventHandler(this.CheckBox_hexTerminal_CheckedChanged);
             // 
             // checkBox_hexParam
             // 
@@ -222,7 +223,7 @@ namespace UsbPrnControl
             this.checkBox_hexParam.TabIndex = 5;
             this.checkBox_hexParam.Text = "hex parameter";
             this.checkBox_hexParam.UseVisualStyleBackColor = true;
-            this.checkBox_hexParam.CheckedChanged += new System.EventHandler(this.checkBox_hexParam_CheckedChanged);
+            this.checkBox_hexParam.CheckedChanged += new System.EventHandler(this.CheckBox_hexParam_CheckedChanged);
             // 
             // textBox_param
             // 
@@ -235,32 +236,33 @@ namespace UsbPrnControl
             this.textBox_param.Name = "textBox_param";
             this.textBox_param.Size = new System.Drawing.Size(386, 20);
             this.textBox_param.TabIndex = 6;
-            this.textBox_param.Leave += new System.EventHandler(this.textBox_param_Leave);
+            this.textBox_param.Leave += new System.EventHandler(this.TextBox_param_Leave);
             // 
             // button_Clear
             // 
             this.button_Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Clear.Location = new System.Drawing.Point(502, 225);
+            this.button_Clear.Location = new System.Drawing.Point(505, 228);
             this.button_Clear.Name = "button_Clear";
             this.button_Clear.Size = new System.Drawing.Size(70, 25);
             this.button_Clear.TabIndex = 15;
             this.button_Clear.Text = "Clear";
             this.button_Clear.UseVisualStyleBackColor = true;
-            this.button_Clear.Click += new System.EventHandler(this.button_Clear_Click);
+            this.button_Clear.Click += new System.EventHandler(this.Button_Clear_Click);
             // 
             // checkBox_saveInput
             // 
             this.checkBox_saveInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox_saveInput.AutoSize = true;
+            this.checkBox_saveInput.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox_saveInput.Checked = true;
             this.checkBox_saveInput.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveInput.Location = new System.Drawing.Point(317, 233);
+            this.checkBox_saveInput.Location = new System.Drawing.Point(360, 233);
             this.checkBox_saveInput.Name = "checkBox_saveInput";
-            this.checkBox_saveInput.Size = new System.Drawing.Size(49, 17);
+            this.checkBox_saveInput.Size = new System.Drawing.Size(68, 17);
             this.checkBox_saveInput.TabIndex = 98;
-            this.checkBox_saveInput.Text = "input";
+            this.checkBox_saveInput.Text = "Save log";
             this.checkBox_saveInput.UseVisualStyleBackColor = true;
-            this.checkBox_saveInput.CheckedChanged += new System.EventHandler(this.checkBox_saveTo_CheckedChanged);
+            this.checkBox_saveInput.CheckedChanged += new System.EventHandler(this.CheckBox_saveTo_CheckedChanged);
             // 
             // textBox_saveTo
             // 
@@ -271,6 +273,7 @@ namespace UsbPrnControl
             this.textBox_saveTo.Size = new System.Drawing.Size(62, 20);
             this.textBox_saveTo.TabIndex = 14;
             this.textBox_saveTo.Text = "usb_rx.txt";
+            this.textBox_saveTo.Leave += new System.EventHandler(this.TextBox_saveTo_Leave);
             // 
             // button_openFile
             // 
@@ -281,7 +284,7 @@ namespace UsbPrnControl
             this.button_openFile.TabIndex = 8;
             this.button_openFile.Text = "Select file:";
             this.button_openFile.UseVisualStyleBackColor = true;
-            this.button_openFile.Click += new System.EventHandler(this.button_openFile_Click);
+            this.button_openFile.Click += new System.EventHandler(this.Button_openFile_Click);
             // 
             // textBox_fileName
             // 
@@ -294,7 +297,7 @@ namespace UsbPrnControl
             this.textBox_fileName.Name = "textBox_fileName";
             this.textBox_fileName.Size = new System.Drawing.Size(310, 20);
             this.textBox_fileName.TabIndex = 9;
-            this.textBox_fileName.TextChanged += new System.EventHandler(this.textBox_fileName_TextChanged);
+            this.textBox_fileName.TextChanged += new System.EventHandler(this.TextBox_fileName_TextChanged);
             // 
             // checkBox_hexFileOpen
             // 
@@ -307,7 +310,7 @@ namespace UsbPrnControl
             this.checkBox_hexFileOpen.TabIndex = 10;
             this.checkBox_hexFileOpen.Text = "hex text data";
             this.checkBox_hexFileOpen.UseVisualStyleBackColor = true;
-            this.checkBox_hexFileOpen.CheckedChanged += new System.EventHandler(this.checkBox_hexFileOpen_CheckedChanged);
+            this.checkBox_hexFileOpen.CheckedChanged += new System.EventHandler(this.CheckBox_hexFileOpen_CheckedChanged);
             // 
             // button_sendFile
             // 
@@ -319,12 +322,12 @@ namespace UsbPrnControl
             this.button_sendFile.TabIndex = 11;
             this.button_sendFile.Text = "Send file:";
             this.button_sendFile.UseVisualStyleBackColor = true;
-            this.button_sendFile.Click += new System.EventHandler(this.button_sendFile_ClickAsync);
+            this.button_sendFile.Click += new System.EventHandler(this.Button_sendFile_ClickAsync);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1_FileOk);
             // 
             // textBox_delay
             // 
@@ -381,7 +384,7 @@ namespace UsbPrnControl
             this.radioButton_stream.TabStop = true;
             this.radioButton_stream.Text = "stream;";
             this.radioButton_stream.UseVisualStyleBackColor = true;
-            this.radioButton_stream.CheckedChanged += new System.EventHandler(this.radioButton_stream_CheckedChanged);
+            this.radioButton_stream.CheckedChanged += new System.EventHandler(this.RadioButton_stream_CheckedChanged);
             // 
             // radioButton_byByte
             // 
@@ -448,7 +451,7 @@ namespace UsbPrnControl
             this.checkBox_printer.TabIndex = 115;
             this.checkBox_printer.Text = "printer";
             this.checkBox_printer.UseVisualStyleBackColor = true;
-            this.checkBox_printer.CheckedChanged += new System.EventHandler(this.checkBox_printer_CheckedChanged);
+            this.checkBox_printer.CheckedChanged += new System.EventHandler(this.CheckBox_printer_CheckedChanged);
             // 
             // checkBox_scanner
             // 
@@ -459,55 +462,32 @@ namespace UsbPrnControl
             this.checkBox_scanner.TabIndex = 115;
             this.checkBox_scanner.Text = "scanner";
             this.checkBox_scanner.UseVisualStyleBackColor = true;
-            this.checkBox_scanner.CheckedChanged += new System.EventHandler(this.checkBox_scanner_CheckedChanged);
+            this.checkBox_scanner.CheckedChanged += new System.EventHandler(this.CheckBox_scanner_CheckedChanged);
             // 
             // checkBox_saveTime
             // 
             this.checkBox_saveTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox_saveTime.AutoSize = true;
+            this.checkBox_saveTime.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox_saveTime.Checked = true;
             this.checkBox_saveTime.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveTime.Location = new System.Drawing.Point(144, 233);
+            this.checkBox_saveTime.Location = new System.Drawing.Point(147, 233);
             this.checkBox_saveTime.Name = "checkBox_saveTime";
-            this.checkBox_saveTime.Size = new System.Drawing.Size(45, 17);
+            this.checkBox_saveTime.Size = new System.Drawing.Size(49, 17);
             this.checkBox_saveTime.TabIndex = 116;
-            this.checkBox_saveTime.Text = "time";
+            this.checkBox_saveTime.Text = "Time";
             this.checkBox_saveTime.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_saveOutput
-            // 
-            this.checkBox_saveOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox_saveOutput.AutoSize = true;
-            this.checkBox_saveOutput.Checked = true;
-            this.checkBox_saveOutput.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveOutput.Location = new System.Drawing.Point(372, 233);
-            this.checkBox_saveOutput.Name = "checkBox_saveOutput";
-            this.checkBox_saveOutput.Size = new System.Drawing.Size(56, 17);
-            this.checkBox_saveOutput.TabIndex = 98;
-            this.checkBox_saveOutput.Text = "output";
-            this.checkBox_saveOutput.UseVisualStyleBackColor = true;
-            this.checkBox_saveOutput.CheckedChanged += new System.EventHandler(this.checkBox_saveTo_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(279, 234);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 117;
-            this.label2.Text = "Save";
+            this.checkBox_saveTime.CheckedChanged += new System.EventHandler(this.CheckBox_saveTime_CheckedChanged);
             // 
             // timer1
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 262);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBox_saveTime);
             this.Controls.Add(this.checkBox_scanner);
             this.Controls.Add(this.checkBox_printer);
@@ -526,7 +506,6 @@ namespace UsbPrnControl
             this.Controls.Add(this.checkBox_hexFileOpen);
             this.Controls.Add(this.button_sendFile);
             this.Controls.Add(this.textBox_saveTo);
-            this.Controls.Add(this.checkBox_saveOutput);
             this.Controls.Add(this.checkBox_saveInput);
             this.Controls.Add(this.button_Clear);
             this.Controls.Add(this.textBox_param);
@@ -590,8 +569,6 @@ namespace UsbPrnControl
         private CheckBox checkBox_printer;
         private CheckBox checkBox_scanner;
         private CheckBox checkBox_saveTime;
-        private CheckBox checkBox_saveOutput;
-        private Label label2;
         ToolTip ToolTipTerminal = new ToolTip();
         private Timer timer1;
     }
