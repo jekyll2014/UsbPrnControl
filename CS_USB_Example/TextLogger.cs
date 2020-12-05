@@ -1,5 +1,5 @@
 ﻿/*
-        private TextLogger.TextLogger _logger;
+        private TextLogger _logger;
 
         private enum DataDirection
         {
@@ -21,7 +21,7 @@
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _logger = new TextLogger.TextLogger(this)
+            _logger = new TextLogger(this)
             {
                 Channels = _directions,
                 FilterZeroChar = false,
@@ -48,31 +48,14 @@
             CheckBox_autoscroll_CheckedChanged(null, EventArgs.Empty);
         }
 
-        private void CheckBox_saveTime_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox_saveTime.Checked)
-            {
-                _logger.DefaultDateFormat = TextLogger.TextLogger.DateFormat.ShortDate;
-                _logger.DefaultTimeFormat = TextLogger.TextLogger.TimeFormat.LongTime;
-            }
-            else
-            {
-                _logger.DefaultDateFormat = TextLogger.TextLogger.DateFormat.None;
-                _logger.DefaultTimeFormat = TextLogger.TextLogger.TimeFormat.None;
-            }
-        }
-
-        private void CheckBox_hexTerminal_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox_hexTerminal.Checked)
-                _logger.DefaultTextFormat = TextLogger.TextLogger.TextFormat.Hex;
-            else
-                _logger.DefaultTextFormat = TextLogger.TextLogger.TextFormat.AutoReplaceHex;
-        }
-
         private void Button_Clear_Click(object sender, EventArgs e)
         {
             _logger.Clear();
+        }
+
+        private void Button_closeport_Click(object sender, EventArgs e)
+        {
+            _logger.RefreshStop();
         }
 
         private void CheckBox_saveTo_CheckedChanged(object sender, EventArgs e)
@@ -115,7 +98,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
+
+using Timer = System.Windows.Forms.Timer;
 
 namespace TextLogger
 {
@@ -364,56 +350,64 @@ namespace TextLogger
         private bool AddTextToBuffer(string text)
         {
             if (text == null || text.Length <= 0) return false;
-            lock (_textOutThreadLock)
+            //lock (_textOutThreadLock)
+            LockWithTimeout(_textOutThreadLock, () =>
             {
                 if (AutoSave && !string.IsNullOrEmpty(LogFileName))
                 {
-                    File.AppendAllText(LogFileName, text);
-                }
-
-                if (NoScreenOutput) return true;
-
-
-                Text += text;
-
-                var textSizeReduced = 0;
-                if (CharLimit > 0 && Text.Length > CharLimit)
-                {
-                    textSizeReduced = Text.Length - CharLimit;
-                }
-
-                if (LineLimit > 0)
-                {
-                    if (GetLinesCount(Text, LineLimit, out var pos))
+                    try
                     {
-                        if (pos > textSizeReduced)
-                            textSizeReduced = pos;
+                        File.AppendAllText(LogFileName, text);
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
                     }
                 }
 
-                if (textSizeReduced > 0)
+                if (!NoScreenOutput)
                 {
-                    Text = Text.Substring(textSizeReduced);
-                }
+                    Text += text;
 
-                if (_textBox != null && !AutoScroll)
-                {
-                    _mainForm?.Invoke((MethodInvoker)delegate
-                   {
-                       _selStart = _textBox.SelectionStart;
-                       _selLength = _textBox.SelectionLength;
-                   });
-                    _selStart -= textSizeReduced;
-                    if (_selStart < 0)
+                    var textSizeReduced = 0;
+                    if (CharLimit > 0 && Text.Length > CharLimit)
                     {
-                        _selLength += _selStart;
-                        _selStart = 0;
-                        if (_selLength < 0) _selLength = 0;
+                        textSizeReduced = Text.Length - CharLimit;
                     }
-                }
 
-                OnPropertyChanged();
-            }
+                    if (LineLimit > 0)
+                    {
+                        if (GetLinesCount(Text, LineLimit, out var pos))
+                        {
+                            if (pos > textSizeReduced)
+                                textSizeReduced = pos;
+                        }
+                    }
+
+                    if (textSizeReduced > 0)
+                    {
+                        Text = Text.Substring(textSizeReduced);
+                    }
+
+                    if (_textBox != null && !AutoScroll)
+                    {
+                        _mainForm?.Invoke((MethodInvoker)delegate
+                       {
+                           _selStart = _textBox.SelectionStart;
+                           _selLength = _textBox.SelectionLength;
+                       });
+                        _selStart -= textSizeReduced;
+                        if (_selStart < 0)
+                        {
+                            _selLength += _selStart;
+                            _selStart = 0;
+                            if (_selLength < 0) _selLength = 0;
+                        }
+                    }
+
+                    OnPropertyChanged();
+                }
+            }, 5000);
 
             return true;
         }
@@ -491,6 +485,25 @@ namespace TextLogger
         private void RefreshTimerTick(object sender, EventArgs e)
         {
             UpdateDisplay();
+        }
+
+        public static void LockWithTimeout(object lockObj, Action doAction, int millisecondsTimeout = 15000)
+        {
+            bool lockWasTaken = false; var temp = lockObj;
+            try
+            {
+                Monitor.TryEnter(temp, millisecondsTimeout, ref lockWasTaken);
+                if (lockWasTaken)
+                {
+                    doAction();
+                }
+                else
+                {
+                    //throw new Exception("Could not get lock");
+                    lockObj = new object();
+                }
+            }
+            finally { if (lockWasTaken) { Monitor.Exit(temp); } }
         }
 
     }

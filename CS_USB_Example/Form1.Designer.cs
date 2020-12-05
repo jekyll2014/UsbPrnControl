@@ -525,7 +525,7 @@ namespace UsbPrnControl
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "UsbPrnControl (c) Andrey Kalugin (jekyll@mail.ru), 2018";
+            this.Text = "UsbPrnControl (c) Andrey Kalugin (jekyll@mail.ru)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

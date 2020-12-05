@@ -516,8 +516,8 @@ namespace UsbPrnControl
 
         private void CheckBox_saveTo_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox_saveInput.Checked) textBox_saveTo.Enabled = false;
-            else textBox_saveTo.Enabled = true;
+            textBox_saveTo.Enabled = !checkBox_saveInput.Checked;
+            _logger.AutoSave = checkBox_saveInput.Checked;
         }
 
         private async void Button_sendFile_ClickAsync(object sender, EventArgs e)
